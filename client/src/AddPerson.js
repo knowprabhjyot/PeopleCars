@@ -1,14 +1,39 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { Button, TextField } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
+import { useMutation } from "@apollo/client";
+import { ADD_PEOPLE, GET_PEOPLES } from "./queries";
 
 const AddPerson = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [id] = useState(uuidv4());
+  const [addPeople] = useMutation(ADD_PEOPLE);
+
+  const onFinish = (event) => {
+    event.preventDefault();
+    addPeople({
+      variables: {
+        id,
+        firstName,
+        lastName,
+      },
+      update: (cache, { data: { addPeople } }) => {
+        const data = cache.readQuery({ query: GET_PEOPLES });
+        cache.writeQuery({
+          query: GET_PEOPLES,
+          data: {
+            ...data,
+            peoples: [...data.peoples, addPeople],
+          },
+        });
+      },
+    });
+  };
 
   return (
     <div>
-      <form>
         <Box
           display="flex"
           justifyContent="center"
@@ -50,9 +75,8 @@ const AddPerson = () => {
               variant="outlined"
             />
           </Box>
-          <Button variant="outlined">Add Person</Button>
+          <Button variant="outlined" onClick={onFinish}>Add Person</Button>
         </Box>
-      </form>
     </div>
   );
 };
