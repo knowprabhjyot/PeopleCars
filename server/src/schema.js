@@ -97,7 +97,7 @@ const cars = [
 
 
 
-const typeDefs = gql`
+const peopleTypeDefs = gql`
   type People {
     id: String!
     firstName: String
@@ -114,7 +114,27 @@ const typeDefs = gql`
   }
 `
 
-const resolvers = {
+const carTypeDefs = gql`
+  type Car {
+    id: String!
+    year: String
+    make: String
+    model: String
+    price: String
+    personId: String
+  }
+  type Query {
+    car(id: String!): Car
+    cars: [Car]
+  }
+  type Mutation {
+    addCar(id: String!, year: String!, make: String!, model: String!, price: String!, personId: String!): Car
+    updateCar(id: String!, year: String!, make: String!, model: String!, price: String!, personId: String!): People
+    removeCar(id: String!): Car
+  }
+`
+
+const peopleResolvers = {
   Query: {
     peoples: () => peoples,
     people: (root, args) => {
@@ -161,4 +181,60 @@ const resolvers = {
   }
 }
 
-export { typeDefs, resolvers }
+
+const carResolvers = {
+  Query: {
+    cars: () => cars,
+    car: (root, args) => {
+      return find(cars, { id: args.id })
+    }
+  },
+  Mutation: {
+    addCar: (root, args) => {
+      const newCar = {
+        id: args.id,
+        year: args.year,
+        make: args.make,
+        model: args.model,
+        price: args.price,
+        personId: args.personId
+      }
+
+      addCar.push(newCar)
+
+      return newCar
+    },
+    updateCar: (root, args) => {
+      const car = find(cars, { id: args.id })
+
+      if (!car) {
+        throw new Error(`Couldn't find car with id ${args.id}`)
+      }
+
+      car.make = args.make
+      car.model = args.model
+      car.year = args.year
+      car.personId = args.personId
+      car.price = args.price
+
+
+
+      return car
+    },
+    removeCar: (root, args) => {
+      const removedCars = find(cars, { id: args.id })
+
+      if (!removedCars) {
+        throw new Error(`Couldn't find car with id ${args.id}`)
+      }
+
+      remove(cars, c => {
+        return c.id === removedCars.id
+      })
+
+      return removedCars
+    }
+  }
+}
+
+export { peopleTypeDefs, peopleResolvers, carTypeDefs, carResolvers }
