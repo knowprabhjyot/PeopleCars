@@ -1,21 +1,55 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { Button, Menu, MenuItem, TextField } from "@mui/material";
+import { useMutation, useQuery } from "@apollo/client";
+import { ADD_CAR, GET_CARS, GET_PEOPLES } from "./queries";
+import { v4 as uuidv4 } from "uuid";
 
 const AddCar = () => {
   const [year, setYear] = useState("");
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [price, setPrice] = useState("");
+  const [selectedPerson, setSelectedPerson] = useState("");
+  let peoplesData = useQuery(GET_PEOPLES);
+  console.log(peoplesData, "data");
+  const [addCar] = useMutation(ADD_CAR);
+  const [id] = useState(uuidv4());
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+
+  const handleClose = (val) => {
+    setSelectedPerson(val.id);
     setAnchorEl(null);
   };
+
+
+  const addCartoPerson = (val) => {
+    addCar({
+      variables: {
+        id,
+        make,
+        model,
+        year,
+        price,
+        personId: selectedPerson,
+      },
+      update: (cache, { data: { addCar } }) => {
+        const data = cache.readQuery({ query: GET_CARS });
+        cache.writeQuery({
+          query: GET_CARS,
+          data: {
+            ...data,
+            peoples: [...data.cars, addCar],
+          },
+        });
+      },
+    });
+  }
 
   return (
     <div>
@@ -125,13 +159,17 @@ const AddCar = () => {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              {peoplesData.data?.peoples.map((val) => {
+                return (
+                  <MenuItem onClick={() => handleClose(val)}>
+                    {val.firstName}
+                  </MenuItem>
+                );
+              })}
             </Menu>
           </Box>
 
-          <Button variant="outlined">Add Car</Button>
+          <Button variant="outlined" onClick={addCartoPerson}>Add Car</Button>
         </Box>
       </form>
     </div>
