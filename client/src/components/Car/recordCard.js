@@ -6,10 +6,10 @@
   import { useState } from "react";
   import EditButton from "@mui/icons-material/Edit";
 
-  const RecordCard = ({ data }) => {
+const RecordCard = ({ data, firstName, lastName }) => {
     const [editMode, setEditMode] = useState(false);
     const handleButtonClick = () => setEditMode(!editMode);
-
+    console.log(data, "data");
     return (
       <>
         <Box
@@ -20,7 +20,8 @@
           padding="20px"
         >
           <h4>
-            {data.firstName} {data.lastName}
+            {/* {data.firstName} {data.lastName} */}
+            {firstName ? `${firstName} ${lastName}` : `${data.firstName} ${data.lastName}`}
           </h4>
           <Box display="flex" flexDirection="column" gap="20px">
             {data.cars?.map((val, index) => {
@@ -54,7 +55,9 @@
           <Box padding="20px">
             <Divider />
           </Box>
-          <Link to={`person/${data.id}`}>Learn More</Link>
+         {
+          !firstName ?  <Link to={`person/${data.id}/${data.firstName}/${data.lastName}`}>Learn More</Link> : null
+         }
         </Box>
       </>
     );

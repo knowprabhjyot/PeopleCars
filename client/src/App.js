@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route index element={<Home />} />
-          <Route path="person/:person" element={<CarDetail />} />
+          <Route path="person/:person/:firstName/:lastName" element={<CarDetail />} />
         </Routes>
       </Router>
     </ApolloProvider>
