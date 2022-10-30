@@ -2,7 +2,7 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import { Button, Menu, MenuItem, TextField } from "@mui/material";
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_CAR, GET_CARS, GET_PEOPLES } from "./queries";
+import { ADD_CAR, GET_CARS, GET_PEOPLES } from "../../queries";
 import { v4 as uuidv4 } from "uuid";
 
 const AddCar = () => {

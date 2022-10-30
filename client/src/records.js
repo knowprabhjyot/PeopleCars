@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
-import { cardContentClasses, List, ListItem } from "@mui/material";
+import { List, ListItem } from "@mui/material";
+import RecordCard from "./components/Car/recordCard";
 import { GET_CARS, GET_PEOPLES } from "./queries";
-import RecordCard from "./recordCard";
 
 const Records = () => {
   const getStyles = () => ({

@@ -4,7 +4,7 @@ import DeleteButton from "@mui/icons-material/Delete";
 
 import filter from "lodash.filter";
 import { IconButton } from "@mui/material";
-import { GET_CARS, REMOVE_CAR } from "./queries";
+import { GET_CARS, REMOVE_CAR } from "../../queries";
 
 const RemoveCar = (props) => {
   const [removeCar] = useMutation(REMOVE_CAR, {

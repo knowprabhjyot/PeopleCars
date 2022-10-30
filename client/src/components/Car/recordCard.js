@@ -1,5 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import RemoveCar from "./removeCar";
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import { Link } from "react-router-dom";
 
 const RecordCard = ({ data }) => {
   console.log(data.cars);
@@ -31,6 +34,12 @@ const RecordCard = ({ data }) => {
           );
         })}
       </Box>
+
+       <Box padding="20px"> 
+       <Divider />
+
+       </Box>
+       <Link to="about">Learn More</Link>
     </Box>
   );
 };
