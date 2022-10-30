@@ -4,7 +4,7 @@ import express from "express";
 import http from "http";
 
 
-import { typeDefs, resolvers } from './src/schema'
+import { typeDefs, typeResolvers} from './src/schema'
 
 
 const startApolloServer = async (typeDefs, resolvers) => {
@@ -27,4 +27,4 @@ const startApolloServer = async (typeDefs, resolvers) => {
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
   }
   
-  startApolloServer(typeDefs, resolvers)
+  startApolloServer(typeDefs, typeResolvers)
