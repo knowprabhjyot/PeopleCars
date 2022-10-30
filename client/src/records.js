@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
-import { List, ListItem } from "@mui/material";
-import { GET_PEOPLES } from "./queries";
+import { cardContentClasses, List, ListItem } from "@mui/material";
+import { GET_CARS, GET_PEOPLES } from "./queries";
 import RecordCard from "./recordCard";
 
 const Records = () => {
@@ -8,19 +8,31 @@ const Records = () => {
     list: {
       display: "flex",
       justifyContent: "center",
+      flexDirection: "column"
     },
   });
 
-  const { loading, error, data } = useQuery(GET_PEOPLES);
+  let { loading, error, data } = useQuery(GET_PEOPLES);
+  let carsData = useQuery(GET_CARS);
+  let mainData = [];
+  data?.peoples
+    .filter((item) => item)
+    .forEach((d) => {
+      let foundCars = carsData.data?.cars.filter(
+        (val) => val.personId === d.id
+      );
+      mainData.push({ ...d, cars: foundCars });
+    });
+
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
   const styles = getStyles();
 
   return (
     <List grid={{ gutter: 20, column: 1 }} style={styles.list}>
-      {data.peoples.map((val) => (
+      {mainData.map((val) => (
         <ListItem key={val.id}>
-          <RecordCard data={val} />
+            <RecordCard data={val} />
         </ListItem>
       ))}
     </List>

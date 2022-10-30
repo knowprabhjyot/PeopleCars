@@ -1,12 +1,12 @@
 import { useMutation } from "@apollo/client";
 
-import { GET_CARS, REMOVE_CAR } from "../../queries";
 import DeleteButton from "@mui/icons-material/Delete";
 
 import filter from "lodash.filter";
 import { IconButton } from "@mui/material";
+import { GET_CARS, REMOVE_CAR } from "./queries";
 
-const RemoveCar = ({ id }) => {
+const RemoveCar = (props) => {
   const [removeCar] = useMutation(REMOVE_CAR, {
     update(cache, { data: { removeCar } }) {
       const { contacts } = cache.readQuery({ query: GET_CARS });
@@ -29,7 +29,7 @@ const RemoveCar = ({ id }) => {
     if (result) {
       removeCar({
         variables: {
-          id,
+          id: props.data.id,
         },
       });
     }
@@ -38,7 +38,7 @@ const RemoveCar = ({ id }) => {
   return (
     <IconButton
       onClick={handleButtonClick}
-      color="primary"
+      color="secondary"
       aria-label="upload picture"
       component="label"
     >
