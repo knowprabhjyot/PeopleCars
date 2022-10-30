@@ -124,7 +124,7 @@ type Mutation {
     model: String!
     price: String!
     personId: String!
-  ): People
+  ): Car
   removeCar(id: String!): Car
   addPeople(id: String!, firstName: String!, lastName: String!): People
   updatePeople(id: String!, firstName: String, lastName: String): People

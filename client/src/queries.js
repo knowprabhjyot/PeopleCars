@@ -90,7 +90,7 @@ export const UPDATE_CAR = gql`
     $personId: String!
   ) {
     updateCar(
-      id: $id
+      id: $id    
       make: $make
       model: $model
       year: $year

@@ -13,16 +13,11 @@ const UpdateCar = ({ data, onButtonClick }) => {
   const [personId, setPersonId] = useState(data.personId);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const open = Boolean(anchorEl);
+  const [, forceUpdate] = useState();
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (val) => {
-    setPersonId(val.id);
-    setAnchorEl(null);
-  };
+  useEffect(() => {
+    forceUpdate({});
+  }, []);
 
   const [updateCar] = useMutation(UPDATE_CAR);
 
@@ -130,35 +125,7 @@ const UpdateCar = ({ data, onButtonClick }) => {
           justifyContent="center"
           gap="20px"
           alignItems="center"
-        >
-          <Button
-            id="basic-button"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-            variant="outlined"
-          >
-            Select Person
-          </Button>
-          {/* <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            {peoplesData.data?.peoples.map((val) => {
-              return (
-                <MenuItem onClick={() => handleClose(val)}>
-                  {val.firstName}
-                </MenuItem>
-              );
-            })}
-          </Menu> */}
-        </Box>
+        ></Box>
 
         <Button variant="outlined" type="button" onClick={onFinish}>
           Update Car
