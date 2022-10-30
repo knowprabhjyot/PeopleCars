@@ -17,6 +17,8 @@ const RecordCard = ({ peoplesData, firstName, lastName }) => {
     (data) => data.personId == peoplesData.id
   );
 
+  console.log(peoplesData, "peoplesdata");
+
   return (
     <>
       <Box
