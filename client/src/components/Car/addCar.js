@@ -12,7 +12,6 @@ const AddCar = () => {
   const [price, setPrice] = useState("");
   const [selectedPerson, setSelectedPerson] = useState("");
   let peoplesData = useQuery(GET_PEOPLES);
-  console.log(peoplesData, "data");
   const [addCar] = useMutation(ADD_CAR);
   const [id] = useState(uuidv4());
 
@@ -159,9 +158,9 @@ const AddCar = () => {
                 "aria-labelledby": "basic-button",
               }}
             >
-              {peoplesData.data?.peoples.map((val) => {
+              {peoplesData.data?.peoples.map((val, index) => {
                 return (
-                  <MenuItem onClick={() => handleClose(val)}>
+                  <MenuItem key={index} onClick={() => handleClose(val)}>
                     {val.firstName}
                   </MenuItem>
                 );
