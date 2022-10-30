@@ -9,11 +9,11 @@ import { GET_CARS, REMOVE_CAR } from "../../queries";
 const RemoveCar = (props) => {
   const [removeCar] = useMutation(REMOVE_CAR, {
     update(cache, { data: { removeCar } }) {
-      const { contacts } = cache.readQuery({ query: GET_CARS });
+      const { cars } = cache.readQuery({ query: GET_CARS });
       cache.writeQuery({
         query: GET_CARS,
         data: {
-          contacts: filter(contacts, (o) => {
+          cars: filter(cars, (o) => {
             return o.id !== removeCar.id;
           }),
         },
