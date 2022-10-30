@@ -43,7 +43,7 @@ const AddCar = () => {
           query: GET_CARS,
           data: {
             ...data,
-            peoples: [...data.cars, addCar],
+            cars: [...data.cars, addCar],
           },
         });
       },
