@@ -26,7 +26,7 @@
             {data.cars?.map((val, index) => {
               return (
                 <Box key={index}>
-                  <Box backgroundColor="#d1d1d1">
+                  <Box backgroundColor="#d1d1d1" padding="20px" borderRadius="10px">
                     {" "}
                     <Typography variant="h6">
                       {val.year} {val.make} {"--> $"} {val.price}
@@ -54,7 +54,7 @@
           <Box padding="20px">
             <Divider />
           </Box>
-          <Link to="about">Learn More</Link>
+          <Link to={`person/${data.id}`}>Learn More</Link>
         </Box>
       </>
     );
